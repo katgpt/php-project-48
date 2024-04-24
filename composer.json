@@ -1,0 +1,12 @@
+{
+    "name": "hexlet/code",
+    "type": "project",
+    "authors": [
+        {
+            "name": "katgpt"
+        }
+    ],
+    "require": {
+        "docopt/docopt": "^1.0"
+    }
+}
