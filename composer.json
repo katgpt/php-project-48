@@ -1,6 +1,11 @@
 {
     "name": "hexlet/code",
     "type": "project",
+    "autoload": {
+        "files": [
+            "src/Differ.php"
+        ]
+    },
     "authors": [
         {
             "name": "katgpt"
