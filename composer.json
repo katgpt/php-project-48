@@ -1,6 +1,6 @@
 {
     "name": "hexlet/code",
-    "description": "php-project48",
+    "description": "php-project-48",
     "type": "project",
     "license": "MIT",
     "autoload": {
