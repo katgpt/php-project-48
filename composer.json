@@ -1,6 +1,8 @@
 {
     "name": "hexlet/code",
+    "description": "php-project-48",
     "type": "project",
+    "license": "MIT",
     "autoload": {
         "files": [
             "src/Differ.php"
