@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+
+
 use function PhpProject48\Src\Differ\genDiff;
 
 require('vendor/docopt/docopt/src/docopt.php');
