@@ -5,7 +5,8 @@
     "license": "MIT",
     "autoload": {
         "files": [
-            "src/Differ.php"
+            "src/Differ.php",
+            "src/Parsers.php"
         ]
     },
     "authors": [
@@ -14,7 +15,8 @@
         }
     ],
     "require": {
-        "docopt/docopt": "^1.0"
+        "docopt/docopt": "^1.0",
+        "symfony/yaml": "^7.1"
     },
     "bin": [
         "bin/gendiff"
