@@ -22,3 +22,7 @@ step-6
 step-7
 
 [![asciicast](https://asciinema.org/a/KbJ3nftsYOgt57eLctd5CuvDc.svg)](https://asciinema.org/a/KbJ3nftsYOgt57eLctd5CuvDc)
+
+step-8
+
+[![asciicast](https://asciinema.org/a/T34R97UyroDJAy9wwRpAXmlPm.svg)](https://asciinema.org/a/T34R97UyroDJAy9wwRpAXmlPm)
