@@ -6,7 +6,11 @@
     "autoload": {
         "files": [
             "src/Differ.php",
-            "src/Parsers.php"
+            "src/Parsers.php",
+            "src/Formaters.php",
+            "src/Formaters/Stylish.php",
+            "src/Formaters/Plain.php",
+            "src/Formaters/Json.php"
         ]
     },
     "authors": [
@@ -23,6 +27,8 @@
     ],
     "require-dev": {
         "phpunit/phpunit": "^10.0",
-        "squizlabs/php_codesniffer": "*"
+        "squizlabs/php_codesniffer": "*",
+        "phpstan/phpstan": "^1.11",
+        "phpunit/php-code-coverage": "^10.1.5"
     }
 }
