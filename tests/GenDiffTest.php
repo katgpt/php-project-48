@@ -10,7 +10,7 @@ class GenDiffTest extends TestCase
 {
     private string $pathJson1;
     private string $pathJson2;
-    private string $pathYml1;
+    private string $pathYaml1;
     private string $pathYaml2;
 
     private string $fileExpectedStylish;
@@ -21,7 +21,7 @@ class GenDiffTest extends TestCase
     {
         $this->pathJson1 = __DIR__ . '/fixtures/file1.json';
         $this->pathJson2 = __DIR__ . '/fixtures/file2.json';
-        $this->pathYml1  = __DIR__ . '/fixtures/file1.yaml';
+        $this->pathYaml1 = __DIR__ . '/fixtures/file1.yaml';
         $this->pathYaml2 = __DIR__ . '/fixtures/file2.yaml';
 
         $this->fileExpectedStylish = __DIR__ . '/fixtures/expectedStylish.txt';
@@ -58,13 +58,13 @@ class GenDiffTest extends TestCase
         // Difference between yaml & yaml - files with 'stylish' formatter
         $this->assertStringEqualsFile(
             $this->fileExpectedStylish,
-            genDiff($this->pathYml1, $this->pathYaml2, 'stylish')
+            genDiff($this->pathYaml1, $this->pathYaml2, 'stylish')
         );
 
         // Difference between yaml & yaml - files with 'plain' formatter
         $this->assertStringEqualsFile(
             $this->fileExpectedPlain,
-            genDiff($this->pathYml1, $this->pathYaml2, 'plain')
+            genDiff($this->pathYaml1, $this->pathYaml2, 'plain')
         );
 
         // Difference between two json - files with 'json-formatter'
@@ -76,7 +76,7 @@ class GenDiffTest extends TestCase
         // Difference between yaml & yaml - files with 'json-formatter'
         $this->assertStringEqualsFile(
             $this->fileExpectedJson,
-            genDiff($this->pathYml1, $this->pathYaml2, 'json')
+            genDiff($this->pathYaml1, $this->pathYaml2, 'json')
         );
     }
 }

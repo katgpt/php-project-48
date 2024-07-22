@@ -1,4 +1,3 @@
-
 <?php
 
 namespace PhpProject48\tests\ExceptionTest;

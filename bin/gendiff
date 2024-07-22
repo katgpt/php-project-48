@@ -38,4 +38,3 @@ $formatName = $args['--format'];
 $difference = genDiff($pathToFile1, $pathToFile2, $formatName);
 
 print_r($difference);
-echo "\n";
