@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpProject48\Src\Formaters\Plain;
+namespace Differ\Formaters\Plain;
 
 /**
  * Function formate differences two files on base array of nodes,

@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpProject48\Src\Formaters\Json;
+namespace Differ\Formaters\Json;
 
 /**
  * Function formate input array to string with json format

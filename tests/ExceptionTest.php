@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpProject48\tests\ExceptionTest;
+namespace Differ\tests\ExceptionTest;
 
 use PHPUnit\Framework\TestCase;
 
-use function PhpProject48\Src\Differ\genDiff;
+use function Differ\Differ\genDiff;
 
 class ExceptionTest extends TestCase
 {

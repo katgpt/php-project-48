@@ -1,11 +1,11 @@
 <?php
 
-namespace PhpProject48\Src\Differ;
+namespace Differ\Differ;
 
 use Exception;
 
-use function PhpProject48\Src\Formaters\format;
-use function PhpProject48\Src\Parsers\parse;
+use function Differ\Formaters\format;
+use function Differ\Parsers\parse;
 
 /**
  * Function genDiff is constructed based on how the files have changed

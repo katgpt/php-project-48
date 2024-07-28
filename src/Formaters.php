@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpProject48\Src\Formaters;
+namespace Differ\Formaters;
 
-use function PhpProject48\Src\Formaters\Plain\plain;
-use function PhpProject48\Src\Formaters\Stylish\stylish;
-use function PhpProject48\Src\Formaters\Json\json;
+use function Differ\Formaters\Plain\plain;
+use function Differ\Formaters\Stylish\stylish;
+use function Differ\Formaters\Json\json;
 
 /**
  * Function formats the difference array of two files

@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpProject48\Src\Formaters\Stylish;
+namespace Differ\Formaters\Stylish;
 
 const NUMBER_INDENT_PER_LEVEL_FOR_TEXT = 4;
 const NUMBER_INDENT_PER_LEVEL_FOR_BRACKETS = 2;
