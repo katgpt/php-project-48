@@ -1,6 +1,6 @@
 <?php
 
-namespace Differ\tests\ExceptionTest;
+namespace Differ\Tests\ExceptionTest;
 
 use PHPUnit\Framework\TestCase;
 
