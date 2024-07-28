@@ -3,7 +3,7 @@
 
 use function Differ\Differ\genDiff;
 
-require('vendor/docopt/docopt/src/docopt.php');
+//require('vendor/docopt/docopt/src/docopt.php');
 
 $autoloadPath1 = __DIR__ . '/../../../autoload.php';
 $autoloadPath2 = __DIR__ . '/../vendor/autoload.php';
