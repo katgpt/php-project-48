@@ -3,7 +3,6 @@
 namespace Differ\Parsers;
 
 use Symfony\Component\Yaml\Yaml;
-use Exception;
 
 /**
  * Function converts json or yaml/yml file contents into an object
