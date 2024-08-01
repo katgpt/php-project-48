@@ -17,13 +17,7 @@ test:
 	composer exec --verbose phpunit tests
 
 test-coverage:
-	XDEBUG_MODE=coverage composer exec --verbose phpunit tests -- --coverage-clover coverage/logs/clover.xml
-
-test-coverage-text:
-	XDEBUG_MODE=coverage composer exec --verbose phpunit tests -- --coverage-text
-
-test-coverage-html:
-	XDEBUG_MODE=coverage composer exec --verbose phpunit tests -- --coverage-html coverage/report/
+	XDEBUG_MODE=coverage composer exec --verbose phpunit tests -- --coverage-clover build/logs/clover.xml
 
 gendiff-stylish:
 	./bin/gendiff --format stylish tests/fixtures/file1.json tests/fixtures/file2.json

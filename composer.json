@@ -4,9 +4,6 @@
     "type": "project",
     "license": "MIT",
     "autoload": {
-        "psr-4": {
-            "Hexlet\\Code\\": "src/"
-        },
         "files": [
             "src/Differ.php",
             "src/Parsers.php",
@@ -24,7 +21,8 @@
     "require": {
         "docopt/docopt": "^1.0",
         "symfony/yaml": "^6.4.8",
-        "lstrojny/functional-php": "^1.17"
+        "lstrojny/functional-php": "^1.17",
+        "codeclimate/php-test-reporter": "*"
     },
     "bin": [
         "bin/gendiff"
