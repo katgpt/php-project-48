@@ -84,20 +84,20 @@ function getDifference(object $firstStructure, object $secondStructure): array
 
             switch (true) {
                 case $firstStructureKeyExists && $secondStructureKeyExists:
-                    if (is_object($firstStructure -> $item) && is_object($secondStructure -> $item)) {
-                        $nestedStructure = getDifference($firstStructure -> $item, $secondStructure -> $item);
+                    if (is_object($firstStructure->$item) && is_object($secondStructure->$item)) {
+                        $nestedStructure = getDifference($firstStructure->$item, $secondStructure->$item);
                         $result = array_merge($carry, [getNodeWithOneValue($item, [$nestedStructure], 'unchanged')]);
-                    } elseif ($firstStructure -> $item === $secondStructure -> $item) {
+                    } elseif ($firstStructure->$item === $secondStructure->$item) {
                         $result = array_merge(
                             $carry,
-                            [getNodeWithOneValue($item, [$firstStructure -> $item], 'unchanged')]
+                            [getNodeWithOneValue($item, [$firstStructure->$item], 'unchanged')]
                         );
                     } else {
                         $result = array_merge(
                             $carry,
                             [getNodeWithTwoValues(
                                 $item,
-                                [$firstStructure -> $item, $secondStructure -> $item],
+                                [$firstStructure->$item, $secondStructure->$item],
                                 'changed'
                             )]
                         );
@@ -108,7 +108,7 @@ function getDifference(object $firstStructure, object $secondStructure): array
                         $carry,
                         [getNodeWithOneValue(
                             $item,
-                            [$firstStructure -> $item],
+                            [$firstStructure->$item],
                             'deleted'
                         )]
                     );
@@ -118,7 +118,7 @@ function getDifference(object $firstStructure, object $secondStructure): array
                         $carry,
                         [getNodeWithOneValue(
                             $item,
-                            [$secondStructure -> $item],
+                            [$secondStructure->$item],
                             'added'
                         )]
                     );
