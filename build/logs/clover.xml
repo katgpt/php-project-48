@@ -1,0 +1,12 @@
+<coverage generated="1622547800000">
+  <project timestamp="1622547800000" name="MyProject">
+    <metrics statements="1000" coveredstatements="800" conditionals="200" coveredconditionals="150" methods="100" coveredmethods="80" elements="1300" coveredelements="1030"/>
+    <package name="com.example">
+      <file name="Example.java">
+        <line num="10" count="5" type="stmt"/>
+        <line num="15" count="3" type="method"/>
+        <line num="20" count="2" type="cond"/>
+      </file>
+    </package>
+  </project>
+</coverage>
