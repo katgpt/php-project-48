@@ -14,39 +14,11 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
-    - name: Validate composer.json and composer.lock
-      run: composer validate --strict
-
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v3
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
-
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
-
-    - name: Run test & publish code coverage
-        uses: paambaati/codeclimate-action@v5.0.0
-        # Add Code Climate secret key
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      - name: Hexlet project check
+        uses: hexlet/project-action@release
         with:
-          coverageCommand: make test-coverage
-          coverageLocations: ${{github.workplace}}/build/logs/clover.xml:clover
-          debug: true
-
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
-
-    # - name: Run test suite
-    #   run: composer run-script test
+          hexlet-id: ${{ secrets.HEXLET_ID }}
