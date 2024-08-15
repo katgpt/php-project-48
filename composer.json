@@ -22,7 +22,7 @@
         "docopt/docopt": "^1.0",
         "symfony/yaml": "^6.4.8",
         "lstrojny/functional-php": "^1.17",
-        "codeclimate/php-test-reporter": "*"
+        "codeclimate/php-test-reporter": "5.0.0"
     },
     "bin": [
         "bin/gendiff"
