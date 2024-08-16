@@ -68,7 +68,7 @@ function getNormalizedValue(array $node): array
     return [$value];
 }
 
-function getChangedValue(array $node, $key): mixed
+function getChangedValue(array $node, mixed $key): mixed
 {
     if (is_array($node[$key])) {
         return '[complex value]';
