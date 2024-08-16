@@ -4,21 +4,30 @@ namespace Differ\Parsers;
 
 use Symfony\Component\Yaml\Yaml;
 
-/**
- * Function converts json or yaml/yml file contents into an object
- *
- * @param string $fileContent content of file
- * @param string $format extention of file
- *
- * @return object object with recursive structure
- */
-function parse(string $fileContent, string $format): object
+function getFileContent(string $pathToFile)
 {
-    return match ($format) {
-        'json' => json_decode($fileContent, false),
-        'yaml' => Yaml::parse($fileContent, Yaml::PARSE_OBJECT_FOR_MAP),
-        default => throw new \Exception(
-            "Error: Invalid file extension '{$format}', use json- or yaml/yml- files !\n"
-        )
-    };
+    $contentOfFile = @file_get_contents($pathToFile);
+    if ($contentOfFile !== false) {
+        return $contentOfFile;
+    }
+    throw new \Exception("File not found", 1);
+}
+
+function parse(string $pathToFile)
+{
+    $contentOfFile = getFileContent($pathToFile);
+    $extensionOfFile = pathinfo($pathToFile, PATHINFO_EXTENSION);
+    switch ($extensionOfFile) {
+        case 'json':
+            $parsedContentOfFile = json_decode($contentOfFile, true);
+            break;
+        case 'yml':
+        case 'yaml':
+            $parsedContentOfFile = Yaml::parse($contentOfFile);
+            break;
+        default:
+            throw new \Exception("Unsupported format of incoming file!", 1);
+    }
+
+    return $parsedContentOfFile;
 }

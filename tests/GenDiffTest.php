@@ -8,75 +8,47 @@ use function Differ\Differ\genDiff;
 
 class GenDiffTest extends TestCase
 {
-    private string $pathJson1;
-    private string $pathJson2;
-    private string $pathYaml1;
-    private string $pathYaml2;
-
-    private string $fileExpectedStylish;
-    private string $fileExpectedPlain;
-    private string $fileExpectedJson;
-
-    protected function setUp(): void
+    public function testGenDiff()
     {
-        $this->pathJson1 = __DIR__ . '/fixtures/file1.json';
-        $this->pathJson2 = __DIR__ . '/fixtures/file2.json';
-        $this->pathYaml1 = __DIR__ . '/fixtures/file1.yaml';
-        $this->pathYaml2 = __DIR__ . '/fixtures/file2.yaml';
+        $fixture1 = $this->getPathToFixture('file1.json');
+        $fixture2 = $this->getPathToFixture('file2.json');
+        $actual = genDiff($fixture1, $fixture2, 'stylish');
+        $expected = file_get_contents($this->getPathToFixture('expectedStylish'));
+        $this->assertEquals($expected, $actual);
 
-        $this->fileExpectedStylish = __DIR__ . '/fixtures/expectedStylish.txt';
-        $this->fileExpectedPlain   = __DIR__ . '/fixtures/expectedPlain.txt';
-        $this->fileExpectedJson    = __DIR__ . '/fixtures/expectedJson.json';
+        $fixture1 = $this->getPathToFixture('file1.yaml');
+        $fixture2 = $this->getPathToFixture('file2.yaml');
+        $actual = genDiff($fixture1, $fixture2, 'stylish');
+        $expected = file_get_contents($this->getPathToFixture('expectedStylish'));
+        $this->assertEquals($expected, $actual);
+
+        $fixture1 = $this->getPathToFixture('file1.json');
+        $fixture2 = $this->getPathToFixture('file2.json');
+        $actual = genDiff($fixture1, $fixture2, 'plain');
+        $expected = file_get_contents($this->getPathToFixture('expectedPlain'));
+        $this->assertEquals($expected, $actual);
+
+        $fixture1 = $this->getPathToFixture('file1.yaml');
+        $fixture2 = $this->getPathToFixture('file2.yaml');
+        $actual = genDiff($fixture1, $fixture2, 'plain');
+        $expected = file_get_contents($this->getPathToFixture('expectedPlain'));
+        $this->assertEquals($expected, $actual);
+
+        $fixture1 = $this->getPathToFixture('file1.json');
+        $fixture2 = $this->getPathToFixture('file2.json');
+        $actual = genDiff($fixture1, $fixture2, 'json');
+        $expected = file_get_contents($this->getPathToFixture('expectedJson'));
+        $this->assertEquals($expected, $actual);
+
+        $fixture1 = $this->getPathToFixture('file1.yaml');
+        $fixture2 = $this->getPathToFixture('file2.yaml');
+        $actual = genDiff($fixture1, $fixture2, 'json');
+        $expected = file_get_contents($this->getPathToFixture('expectedJson'));
+        $this->assertEquals($expected, $actual);
     }
 
-    public function testGenDiff(): void
+    private function getPathToFixture($fixtureName)
     {
-        // Difference between two json - files with default formatter
-        $this->assertStringEqualsFile(
-            $this->fileExpectedStylish,
-            genDiff($this->pathJson1, $this->pathJson2)
-        );
-
-        // Difference between two json - files with 'plain' formatter
-        $this->assertStringEqualsFile(
-            $this->fileExpectedPlain,
-            genDiff($this->pathJson1, $this->pathJson2, 'plain')
-        );
-
-        // Difference between two json - files with 'stylish' formatter
-        $this->assertStringEqualsFile(
-            $this->fileExpectedStylish,
-            genDiff($this->pathJson1, $this->pathJson2, 'stylish')
-        );
-
-        // Difference between json & yaml - files with 'stylish' formatter
-        $this->assertStringEqualsFile(
-            $this->fileExpectedStylish,
-            genDiff($this->pathJson1, $this->pathYaml2, 'stylish')
-        );
-
-        // Difference between yaml & yaml - files with 'stylish' formatter
-        $this->assertStringEqualsFile(
-            $this->fileExpectedStylish,
-            genDiff($this->pathYaml1, $this->pathYaml2, 'stylish')
-        );
-
-        // Difference between yaml & yaml - files with 'plain' formatter
-        $this->assertStringEqualsFile(
-            $this->fileExpectedPlain,
-            genDiff($this->pathYaml1, $this->pathYaml2, 'plain')
-        );
-
-        // Difference between two json - files with 'json-formatter'
-        $this->assertStringEqualsFile(
-            $this->fileExpectedJson,
-            genDiff($this->pathJson1, $this->pathJson2, 'json')
-        );
-
-        // Difference between yaml & yaml - files with 'json-formatter'
-        $this->assertStringEqualsFile(
-            $this->fileExpectedJson,
-            genDiff($this->pathYaml1, $this->pathYaml2, 'json')
-        );
+        return __DIR__ . "/fixtures/" . $fixtureName;
     }
 }
