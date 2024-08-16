@@ -19,7 +19,6 @@
         }
     ],
     "require": {
-        "php": "^8.2.7",
         "docopt/docopt": "^1.0",
         "symfony/yaml": "^6.4.8",
         "lstrojny/functional-php": "^1.17",
