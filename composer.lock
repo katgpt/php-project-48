@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "23670b342d6882e37c0f82a5f8a0c3a6",
+    "content-hash": "cb8cb406dd2b982822d4a97dc46e7363",
     "packages": [
         {
             "name": "codeclimate/php-test-reporter",
