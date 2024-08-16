@@ -22,7 +22,8 @@ function makeStringsFromDiff(array $diff, int $level = 0): array
             'same' => formatSame($key, $value1, $spaces, $nextLevel),
             'added' => formatAdded($key, $value1, $spaces, $nextLevel),
             'removed' => formatRemoved($key, $value1, $spaces, $nextLevel),
-            'updated' => formatUpdated($node, $spaces, $nextLevel)
+            'updated' => formatUpdated($node, $spaces, $nextLevel),
+            default => throw new \Exception("Unexpected status: {$status}")
         };
     };
 
