@@ -80,3 +80,4 @@ class GenDiffTest extends TestCase
         );
     }
 }
+

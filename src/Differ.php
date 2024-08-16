@@ -7,16 +7,6 @@ use Exception;
 use function Differ\Formaters\format;
 use function Differ\Parsers\parse;
 
-/**
- * Function genDiff is constructed based on how the files have changed
- * relative to each other, the keys are output in alphabetical order.
- *
- * @param string $pathFirst  path to first file
- * @param string $pathSecond path to second file
- * @param string $formatter style formating
- *
- * @return string file differences in relation to each other
- */
 function genDiff(string $pathFirst, string $pathSecond, string $formatter = 'stylish'): string
 {
     [$firstFileRawContents, $firstFileFormat] = getFileContents($pathFirst);
@@ -31,13 +21,6 @@ function genDiff(string $pathFirst, string $pathSecond, string $formatter = 'sty
     return $outputDiff;
 }
 
-/**
- * Function receives the JSON or YML/YAML file content and decodes it into an object
- *
- * @param string $filepath path to JSON-file
- *
- * @return array<string>
- */
 function getFileContents(string $filepath): array
 {
     if (!is_readable($filepath)) {
@@ -55,25 +38,6 @@ function getFileContents(string $filepath): array
     return [$content, $format];
 }
 
-/**
- * Function compares two files (JSON or YML|YAML) and creates an array of differences for further formatting
- *
- * @param object $firstStructure original object, before changes;
- * @param object $secondStructure final object, after changes;
- *
- * @return array<mixed> array like this:
- * [
- *  'name'  => '<name of object's property>',
- *  'value' => '<value of object's property>',
- *  'type'  => 'unchanged | deleted | added'
- * ] or
- * [
- *  'name'  => '<name of object's property>',
- *  'value1' => '<first value of object's property>',
- *  'value2' => '<second value of object's property>',
- *  'type'  => 'changed'
- * ]
- */
 function getDifference(object $firstStructure, object $secondStructure): array
 {
     return array_reduce(
@@ -133,25 +97,11 @@ function getDifference(object $firstStructure, object $secondStructure): array
     );
 }
 
-/**
- * Function returned all keys of structure such object;
- *
- * @param object $structure object;
- *
- * @return array<int, int|string> all keys of object;
- */
 function getKeysOfStructure(object $structure): array
 {
     return array_keys(json_decode((string) json_encode($structure), true));
 }
 
-/**
- * Immutable array sorting function;
- *
- * @param array<int|string> $array sorted array;
- *
- * @return array<int|string> already sorted array;
- */
 function sortArray(array $array): array
 {
     if (count($array) > 1) {
@@ -164,14 +114,6 @@ function sortArray(array $array): array
     return $array;
 }
 
-/**
- * The function returns a sorted list of all keys of passed structures (trees)
- *
- * @param object $firstTree first structure (tree);
- * @param object $secondTree second structure (tree);
- *
- * @return array<int|string> sorted list of all keys of passed structures (trees);
- */
 function getSortedListAllKeys(object $firstTree, object $secondTree): array
 {
     $firstStructureKeys = getKeysOfStructure($firstTree);
@@ -181,27 +123,11 @@ function getSortedListAllKeys(object $firstTree, object $secondTree): array
     return sortArray($listAllKeys);
 }
 
-/**
- * Function returns the child tree of the passed node
- *
- * @param mixed $treeItem item(node) of tree;
- *
- * @return array<mixed> child tree;
- */
 function getChildTree(mixed $treeItem): array
 {
     return json_decode((string) json_encode($treeItem), true);
 }
 
-/**
- * Function create node with name, value and type
- *
- * @param string $name is name node;
- * @param array<mixed> $values is array from one value node;
- * @param string $type is type node may be 'unchanged' | 'deleted' | 'added' ;
- *
- * @return array<mixed> return node;
- */
 function getNodeWithOneValue(int|string $name, array $values, string $type): array
 {
     [$value] = $values;
@@ -229,15 +155,6 @@ function getNodeWithOneValue(int|string $name, array $values, string $type): arr
     ];
 }
 
-/**
- * Function create node with name, two values and type
- *
- * @param string $name is name node;
- * @param array<mixed> $values is array from old value and new value node;
- * @param string $type is type node may be 'changed';
- *
- * @return array<mixed> return node;
- */
 function getNodeWithTwoValues(int|string $name, array $values, string $type): array
 {
     return [
