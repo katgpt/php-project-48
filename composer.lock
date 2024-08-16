@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "688f2dea2de28ed9d9743fb4ef909185",
+    "content-hash": "cb8cb406dd2b982822d4a97dc46e7363",
     "packages": [
         {
             "name": "codeclimate/php-test-reporter",
@@ -3433,9 +3433,7 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": {
-        "php": "^8.2.7"
-    },
+    "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.6.0"
 }
