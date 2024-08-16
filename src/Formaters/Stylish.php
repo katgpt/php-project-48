@@ -57,7 +57,9 @@ function formatRemoved(mixed $key, mixed $value, string $spaces, int $nextLevel)
 
 function formatUpdated(array $node, string $spaces, int $nextLevel): string
 {
-    extract($node);
+    $key = $node['key'];
+    $value1 = $node['value1'];
+    $value2 = $node['value2'];
     $stringifiedValue1 = stringifyValue($value1, $nextLevel);
     $stringifiedValue2 = stringifyValue($value2, $nextLevel);
     return "{$spaces}  - {$key}: {$stringifiedValue1}\n{$spaces}  + {$key}: {$stringifiedValue2}";
