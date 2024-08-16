@@ -24,17 +24,6 @@ function plain(array $nodes, string $path = ''): string
     }, '');
 }
 
-/**
- * The function returns the text for the property depending on
- * the specified type 'added' or 'deleted' or 'updated'
- *
- * @param string $type for choice of kind text
- * @param string $nameProperty
- * @param string $textAccumulator
- * @param array<mixed> $value array from old value and new value of property
- *
- * @return string
- */
 function getTextForProperty(string $type, string $nameProperty, string $textAccumulator, array $value = []): string
 {
     return match ($type) {
@@ -54,16 +43,6 @@ function getTextForProperty(string $type, string $nameProperty, string $textAccu
     };
 }
 
-/**
- * Function returns [complex value] instead of the argument $value,
- * if the argument is an array or adds quotes to the argument
- * if the argument is not a number or one of the following values:
- * 'true', 'false', 'null'. Otherwise returns the argument as is.
- *
- * @param array<mixed> $node
- *
- * @return array<mixed>
- */
 function getNormalizedValue(array $node): array
 {
     if ($node['type'] === 'changed') {
@@ -89,16 +68,6 @@ function getNormalizedValue(array $node): array
     return [$value];
 }
 
-/**
- * Function returns one of tree node values depending on
- * passed key (‘value1’ | ‘value2’).
- *
- * @param array<mixed> $node node of tree
- * @param string $key key of values
- *
- * @return mixed normalized value from tree node with type
- * 'changed'
- */
 function getChangedValue(array $node, $key): mixed
 {
     if (is_array($node[$key])) {

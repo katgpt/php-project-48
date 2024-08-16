@@ -34,4 +34,3 @@ class ExceptionTest extends TestCase
         genDiff($path1, $path2, 'stylish');
     }
 }
-

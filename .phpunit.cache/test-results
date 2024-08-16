@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"version":1,"defects":[],"times":{"Differ\\Tests\\ExceptionTest\\ExceptionTest::testException":0.001,"Differ\\Tests\\ExceptionTest\\ExceptionTest::testException2":0.002,"Differ\\Tests\\GenDiffTest\\GenDiffTest::testGenDiff":0.002}}
+=======
+{"version":1,"defects":{"Differ\\Tests\\GenDiffTest\\GenDiffTest::testGenDiff":7},"times":{"Differ\\Tests\\ExceptionTest\\ExceptionTest::testException":0.001,"Differ\\Tests\\ExceptionTest\\ExceptionTest::testException2":0.003,"Differ\\Tests\\GenDiffTest\\GenDiffTest::testGenDiff":0.011}}
+>>>>>>> 163e59506b739fbe8ad68f0e46b12016a6e006fb
