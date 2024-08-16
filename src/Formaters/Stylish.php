@@ -2,99 +2,182 @@
 
 namespace Differ\Formaters\Stylish;
 
-function stylishFormat(array $diff): string
-{
-    $formattedDiff = makeStringsFromDiff($diff);
-    $result = implode("\n", $formattedDiff);
+const NUMBER_INDENT_PER_LEVEL_FOR_TEXT = 4;
+const NUMBER_INDENT_PER_LEVEL_FOR_BRACKETS = 2;
+const SYMBOL_OF_INDENT = ' ';
+const FOR_BRACKETS = true;
 
-    return "{\n{$result}\n}";
+/**
+ * Function - wrapper, call recursive function.
+ *
+ * @param array<mixed> $nodes node describing the differences between the two structures
+ *
+ * @return string return formating string and moves to a new line
+ */
+function stylish(array $nodes): string
+{
+    $result = format($nodes);
+
+    return "{$result}\n";
 }
 
-function makeStringsFromDiff(array $diff, int $level = 0): array
+/**
+ * Function format differences two files on base array of nodes,
+ * for added string move prefix '+',
+ * for deleted string - prefix '-',
+ * for unchanged string - prefix ' '.
+ *
+ * @param array<mixed> $nodes node describing the differences between the two structures
+ * @param int $level nesting depth
+ *
+ * @return string return formating string
+ */
+function format(array $nodes, int $level = 1): string
 {
-    $spaces = getSpaces($level);
-    $nextLevel = $level + 1;
+    $result = array_reduce(
+        $nodes,
+        function ($carry, $item) use ($level) {
+            $indent = getIndent($level);
 
-    $formatNode = function ($node) use ($spaces, $nextLevel) {
-        ['status' => $status, 'key' => $key, 'value1' => $value1, 'value2' => $value2] = $node;
-        return match ($status) {
-            'nested' => formatNested($key, $value1, $spaces, $nextLevel),
-            'same' => formatSame($key, $value1, $spaces, $nextLevel),
-            'added' => formatAdded($key, $value1, $spaces, $nextLevel),
-            'removed' => formatRemoved($key, $value1, $spaces, $nextLevel),
-            'updated' => formatUpdated($node, $spaces, $nextLevel)
-        };
+            if ($item['type'] === 'changed') {
+                $value1 = getChangedValue($item, 'value1', $level);
+                $value2 = getChangedValue($item, 'value2', $level);
+
+                return implode(
+                    '',
+                    [$carry,
+                    "{$indent}- {$item['name']}: {$value1}\n",
+                    "{$indent}+ {$item['name']}: {$value2}\n"]
+                );
+            }
+            $value = getValue($item, $level);
+            $prefix = getPrefix($item['type']);
+
+            return implode(
+                '',
+                [$carry,
+                "{$indent}{$prefix} {$item['name']}: {$value}\n"]
+            );
+        },
+        ''
+    );
+    $indent = getIndent($level, FOR_BRACKETS);
+
+    return "{\n{$result}{$indent}}";
+}
+
+/**
+ * Function formats nested arrays
+ *
+ * @param array<mixed> $array nested array
+ * @param int $level level nested
+ *
+ * @return string return formating string
+ */
+function getFormatArray(array $array, int $level): string
+{
+    $listKeys = array_keys($array);
+
+    $string = array_reduce(
+        $listKeys,
+        function ($carry, $item) use ($array, $level) {
+            if (is_array($array[$item])) {
+                $value = getFormatArray($array[$item], $level + 1);
+            } else {
+                $value = $array[$item];
+            }
+            $indent = getIndent($level);
+
+            return implode(
+                '',
+                [ $carry,
+                "{$indent}  {$item}: {$value}\n"]
+            );
+        },
+        ''
+    );
+    $indent = getIndent($level, FOR_BRACKETS);
+
+    return "{\n{$string}{$indent}}";
+}
+
+/**
+ *
+ * Function returns indentation depending on the nesting depth and
+ * the presence of the flag $forBrackets
+ *
+ * @param int  $level nesting depth
+ * @param bool $isBrackets decreases the left indent by two characters for clousere brackets
+ *
+ * @return string margin the left from spaces for differences and brackets
+ */
+function getIndent(int $level, bool $isBrackets = false): string
+{
+    $indentToLeft = $isBrackets ?
+        NUMBER_INDENT_PER_LEVEL_FOR_TEXT :
+        NUMBER_INDENT_PER_LEVEL_FOR_BRACKETS;
+    $indent = $level * NUMBER_INDENT_PER_LEVEL_FOR_TEXT - $indentToLeft;
+
+    return str_repeat(SYMBOL_OF_INDENT, $indent);
+}
+
+/**
+ * function returns a prefix depending on node type
+ *
+ * @param string $itemType node type
+ *
+ * @return string symbol of prefix (' ' | '-' | '+')
+ */
+function getPrefix(string $itemType): string
+{
+    return match ($itemType) {
+        'unchanged' => ' ',
+        'deleted' => '-',
+        'added' => '+',
+        default => throw new \Exception(
+            "Error: Unknown property state type - '{$itemType}'!"
+        )
     };
-
-    return array_map($formatNode, $diff);
 }
 
-function formatNested(mixed $key, mixed $value, string $spaces, int $nextLevel): string
+/**
+ * Function returns the value of the node
+ *
+ * @param array<mixed> $node
+ * @param int $level nesting level
+ *
+ * @return mixed
+ */
+function getValue(array $node, int $level): mixed
 {
-    $nested = makeStringsFromDiff($value, $nextLevel);
-    $stringifiedNest = implode("\n", $nested);
-    return "{$spaces}    {$key}: {\n{$stringifiedNest}\n{$spaces}    }";
-}
-
-function formatSame(mixed $key, mixed $value, string $spaces, int $nextLevel): string
-{
-    $stringifiedValue = stringifyValue($value, $nextLevel);
-    return "{$spaces}    {$key}: {$stringifiedValue}";
-}
-
-function formatAdded(mixed $key, mixed $value, string $spaces, int $nextLevel): string
-{
-    $stringifiedValue = stringifyValue($value, $nextLevel);
-    return "{$spaces}  + {$key}: {$stringifiedValue}";
-}
-
-function formatRemoved(mixed $key, mixed $value, string $spaces, int $nextLevel): string
-{
-    $stringifiedValue = stringifyValue($value, $nextLevel);
-    return "{$spaces}  - {$key}: {$stringifiedValue}";
-}
-
-function formatUpdated(array $node, string $spaces, int $nextLevel): string
-{
-    extract($node);
-    $stringifiedValue1 = stringifyValue($value1, $nextLevel);
-    $stringifiedValue2 = stringifyValue($value2, $nextLevel);
-    return "{$spaces}  - {$key}: {$stringifiedValue1}\n{$spaces}  + {$key}: {$stringifiedValue2}";
-}
-
-function getSpaces(int $level): string
-{
-    return str_repeat('    ', $level);
-}
-
-function stringifyValue(mixed $value, int $level): mixed
-{
-    if (is_null($value)) {
-        return 'null';
+    if (array_key_exists('children', $node)) {
+        return format($node['children'], $level + 1);
+    } elseif (array_key_exists('value', $node)) {
+        if (is_array($node['value'])) {
+            return getFormatArray($node['value'], $level + 1);
+        }
     }
-    if (is_bool($value)) {
-        return $value ? 'true' : 'false';
-    }
-    if (is_array($value)) {
-        $result = convertArrayToString($value, $level);
-        $spaces = getSpaces($level);
-        return "{{$result}\n{$spaces}}";
-    }
-    return "{$value}";
+
+    return $node['value'];
 }
 
-function convertArrayToString(array $value, int $level): string
+/**
+ * Function returns the value of the node with 'changed' type
+ *
+ * @param array<mixed> $node
+ * @param int $level nesting level
+ *
+ * @return mixed
+ */
+function getChangedValue(array $node, string $keyValue, int $level): mixed
 {
-    $keys = array_keys($value);
-    $result = [];
-    $nextLevel = $level + 1;
+    if (is_array($node[$keyValue])) {
+        $value = getFormatArray($node[$keyValue], $level + 1);
+    } else {
+        $value = $node[$keyValue];
+    }
 
-    $callback = function ($key) use ($value, $nextLevel) {
-        $newValue = stringifyValue($value[$key], $nextLevel);
-        $spaces = getSpaces($nextLevel);
-
-        return "\n{$spaces}{$key}: {$newValue}";
-    };
-
-    return implode('', array_map($callback, $keys));
+    return (is_bool($value) || is_null($value)) ?
+        strtolower(var_export($value, true)) :
+        $value;
 }
